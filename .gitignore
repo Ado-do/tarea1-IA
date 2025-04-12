@@ -1,2 +1,12 @@
+# directories
+.cache/
+.vscode/
 build/
+
+# files
 .clangd
+.clang-format
+compile_commands.json
+
+# Persistent undo
+[._]*.un~
