@@ -1,10 +1,15 @@
 #ifndef GAME_H
 #define GAME_H
 
+#define GAME_NAME "JumpLab"
+#define SCREEN_WIDTH 1200
+#define SCREEN_HEIGHT (int)(SCREEN_WIDTH * (9.0 / 16.0))
+#define MAX_LABS 10
+
 typedef enum { TITLE, GAMEPLAY } GameScreen;
 
 typedef struct {
-    int i, j;
+    int x, y;
 } Position;
 
 typedef struct {
@@ -14,7 +19,7 @@ typedef struct {
 } Labyrinth;
 
 typedef struct {
-    Labyrinth *labs;
+    Labyrinth **labs;
     int n_labs;
     int curr_lab;
     int is_running;
@@ -22,11 +27,11 @@ typedef struct {
 } Game;
 
 
-int init_game(Game *, int, int (*)[6], int ***);
+Labyrinth *InitLabyrinth(int, int, Position, Position, int **);
+Game *InitGame(Labyrinth *[MAX_LABS], int);
 
-void update_game(Game *);
-void draw_game(Game *);
+void RunGame(Game *);
 
-void free_game(Game *);
+void FreeGame(Game *);
 
 #endif // GAME_H

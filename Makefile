@@ -34,7 +34,7 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 
 # Clean target
 clean:
-	$(RM) -rf $(BUILD_DIR)
+	$(RM) -rv $(BUILD_DIR)
 
 # Run target
 run: $(BUILD_DIR)/$(OUTPUT)
@@ -48,17 +48,8 @@ run: $(BUILD_DIR)/$(OUTPUT)
 debug: CFLAGS += -g
 debug: all
 
-# Release target
-release: CFLAGS += -O2
-release: all
+recompile: clean run
 
-# Target to check the wildcard result
-check_wildcards:
-	@echo "Source files found:"
-	@echo $(SRC)
-	@echo "Object files generated:"
-	@echo $(OBJ)
-
-.PHONY: all clean run debug release check_wildcards
+.PHONY: all clean run debug recompile
 
 
