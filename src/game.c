@@ -1,6 +1,6 @@
 #include "game.h"
-#include "raylib.h"
 
+#include <raylib.h>
 #include <stdlib.h>
 
 static float time_cnt_s = 0.0f;
