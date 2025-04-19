@@ -5,29 +5,29 @@
 
 static float time_cnt_s = 0.0f;
 
-Labyrinth *InitLabyrinth(int m, int n, Position start, Position end, int **layout) {
-    Labyrinth *lab = (Labyrinth *)malloc(sizeof(Labyrinth));
-    *lab = (Labyrinth){
+Maze *InitMaze(int m, int n, Position start, Position end, int **layout) {
+    Maze *maze = (Maze *)malloc(sizeof(Maze));
+    *maze = (Maze){
         .m = m,
         .n = n,
         .start = start,
         .end = end,
         .layout = layout,
     };
-    return lab;
+    return maze;
 }
 
-Game *InitGame(Labyrinth *labs[MAX_LABS], int n_labs) {
+Game *InitGame(Maze *mazes[MAX_MAZES], int n_mazes) {
     Game *game = (Game *)malloc(sizeof(Game));
     *game = (Game){
-        .labs = (Labyrinth **)malloc(n_labs * sizeof(Labyrinth *)),
-        .n_labs = n_labs,
-        .curr_lab = 0,
+        .mazes = (Maze **) malloc(n_mazes * sizeof(Maze *)),
+        .n_mazes = n_mazes,
+        .curr_maze = 0,
         .is_running = 1,
         .current_screen = TITLE,
     };
-    for (int i = 0; i < n_labs; i++) {
-        game->labs[i] = labs[i];
+    for (int i = 0; i < n_mazes; i++) {
+        game->mazes[i] = mazes[i];
     }
     return game;
 }
@@ -133,7 +133,7 @@ void RunGame(Game *g) {
     CloseWindow();
 }
 
-void FreeLabyrinth(Labyrinth *l) {
+void FreeMaze(Maze *l) {
     for (int i = 0; i < l->m; i++) {
         free(l->layout[i]);
     }
@@ -141,9 +141,9 @@ void FreeLabyrinth(Labyrinth *l) {
 }
 
 void FreeGame(Game *g) {
-    for (int i = 0; i < g->n_labs; i++) {
-        FreeLabyrinth(g->labs[i]);
+    for (int i = 0; i < g->n_mazes; i++) {
+        FreeMaze(g->mazes[i]);
     }
-    free(g->labs);
+    free(g->mazes);
     free(g);
 }

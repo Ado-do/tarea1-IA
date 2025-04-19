@@ -3,44 +3,59 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-Game *ReadAndInitGame() {
-    Labyrinth *labs[MAX_LABS];
-    int n_labs = 0;
+void BadInput(int curr_maze) {
+    fprintf(stderr, "* error: bad input in maze %d\n", curr_maze);
+    exit(EXIT_FAILURE);
+}
 
-    while (n_labs < MAX_LABS) {
+Game *ReadAndInitGame(int argc, char **argv) {
+    if (argc != 2) {
+        fprintf(stderr, "* usage: %s <input_file>\n", argv[0]);
+        exit(EXIT_FAILURE);
+    }
+
+    FILE* input_file = fopen(argv[1], "r");
+    if (!input_file) {
+        fprintf(stderr, "* error: invalid input file\n");
+        exit(EXIT_FAILURE);
+    }
+
+    Maze *mazes[MAX_MAZES];
+    int n_mazes = 0;
+    while (n_mazes < MAX_MAZES) {
         int m, n;
         Position start, end;
 
-        if (scanf("%d", &m) != 1) {
-            fprintf(stderr, "error: bad input in lab %d\n", n_labs);
-            exit(EXIT_FAILURE);
+        if (fscanf(input_file, "%d", &m) != 1) {
+            BadInput(n_mazes);
         }
 
         if (m == 0) break;
 
-        if (scanf("%d%d%d%d%d", &n, &start.x, &start.y, &end.x, &end.y) != 5) {
-            fprintf(stderr, "error: bad input in lab %d\n", n_labs);
-            exit(EXIT_FAILURE);
+        if (fscanf(input_file, "%d %d %d %d %d", &n, &start.x, &start.y, &end.x, &end.y) != 5) {
+            BadInput(n_mazes);
         }
 
         int **layout = (int **) malloc(m * sizeof(int *));
         for (int i = 0; i < m; i++) {
             layout[i] = (int *) malloc(n * sizeof(int));
             for (int j = 0; j < n; j++) {
-                scanf("%d", &layout[i][j]);
+                if (fscanf(input_file, "%d", &layout[i][j]) != 1) {
+                    BadInput(n_mazes);
+                }
             }
         }
-        labs[n_labs] = InitLabyrinth(m, n, start, end, layout);
+        mazes[n_mazes] = InitMaze(m, n, start, end, layout);
 
-        n_labs++;
+        n_mazes++;
     }
 
-    return InitGame(labs, n_labs);
+    return InitGame(mazes, n_mazes);
 }
 
-int main() {
-    Game *game = ReadAndInitGame();
+int main(int argc, char *argv[]) {
+    Game *game = ReadAndInitGame(argc, argv);
     RunGame(game);
     FreeGame(game);
-    return EXIT_SUCCESS;
+    return 0;
 }

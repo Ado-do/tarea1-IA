@@ -1,14 +1,11 @@
 ## VARIABLES
 # Compiler and flags
 CC = gcc
-
 CFLAGS = -Wall -Wextra $(shell pkg-config --cflags raylib)
-
-# LDFLAGS = -Llib -lraylib -lm -lpthread -ldl -lrt -lX11
 LDFLAGS = -lm -lpthread $(shell pkg-config --libs raylib)
 
 # Output executable name
-OUTPUT = jumplab
+OUTPUT = JumpingMaze
 
 # Directories
 SRC_DIR = src
@@ -44,7 +41,7 @@ clean:
 # Run target
 run: $(BUILD_DIR)/$(OUTPUT)
 	@if [ -f $< ]; then \
-		./$< < $(INPUTS_DIR)/example.txt; \
+		./$< $(INPUTS_DIR)/example.txt; \
 	else \
 		echo "Error: $< not found."; \
 	fi
