@@ -161,7 +161,7 @@ static void HandleKeyInput(Game *g)
     switch (key) {
         case KEY_Q: g->isRunning = false; return;
         case KEY_SPACE: MainAction(g); break;
-        case KEY_C: g->showControls = !g->showControls;
+        case KEY_C: g->showControls = !g->showControls; break;
         case KEY_R:
             ResetSearchData(sd);
             InitPlayer(p, m->start.x, m->start.y);

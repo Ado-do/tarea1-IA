@@ -6,7 +6,7 @@ Esta es la implementación del juego "JumpingMaze" para resolver el problema de
 "Laberinto Saltarín", utilizando diferentes algoritmos de búsqueda para
 resolver los diferentes laberintos.
 
-![](./doc/img1.png) ![](./doc/img2.png)
+![](./doc/preview.gif)
 
 ### Alumno: Alonso Bustos E
 

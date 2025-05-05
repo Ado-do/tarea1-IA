@@ -54,7 +54,9 @@ SearchData *CreateSearchData(Maze *m)
         .delay = DEFAULT_DELAY,
         .maxJumpValue = 0,
     };
+
     sd->checked[GetNodeIndex(sd, m->start.x, m->start.y)] = true;
+    sd->visited[GetNodeIndex(sd, m->start.x, m->start.y)] = true;
 
     if (!sd->checked || !sd->adjLists || !sd->containerList || !sd->inFinalPath) {
         TraceLog(LOG_FATAL, "CreateSearchData error");
@@ -135,6 +137,7 @@ void ResetSearchData(SearchData *sd)
     sd->checked[GetNodeIndex(sd, start.x, start.y)] = true;
 
     memset(sd->visited, false, sd->totalNodes * sizeof(bool));
+    sd->visited[GetNodeIndex(sd, start.x, start.y)] = true;
 
     memset(sd->inFinalPath, false, sd->totalNodes * sizeof(bool));
 
@@ -283,6 +286,7 @@ bool ManualStep(SearchData *sd, Direction dir)
 
     unsigned index = GetNodeIndex(sd, newPos.x, newPos.y);
     sd->checked[index] = true;
+    sd->visited[index] = true;
 
     TraceLog(LOG_DEBUG, "ManualStep: current node (%d, %d) in step %d", newPos.x, newPos.y, sd->finalPathLength);
 
@@ -531,6 +535,7 @@ bool IsNodeVisited(const SearchData *sd, int x, int y)
     int index = GetNodeIndex(sd, x, y);
     return sd->visited[index];
 }
+
 bool IsNodeInFinalPath(const SearchData *sd, int x, int y)
 {
     int index = GetNodeIndex(sd, x, y);
