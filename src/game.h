@@ -1,40 +1,45 @@
-#ifndef GAME_H
-#define GAME_H
+#pragma once
+
+#include "maze.h"
+#include "button.h"
+#include "search.h"
 
 #define GAME_NAME "JumpingMaze"
-#define SCREEN_WIDTH 1280
-#define SCREEN_HEIGHT 720
-
 #define MAX_MAZES 10
-#define MAX_COL 100
-#define MAX_ROW 100
 
-typedef enum { TITLE, GAMEPLAY } GameScreen;
+typedef enum { TITLE_STATE, GAMEPLAY_STATE } GameState;
 
 typedef struct {
-    int x, y;
-} Position;
+    Maze *maze;
+    SearchData *searchData;
+    Player player;
+} MazeScreen;
 
 typedef struct {
-    int m, n;
-    Position start, end;
-    int **layout;
-} Maze;
-
-typedef struct {
-    Maze **mazes;
-    int n_mazes;
-    int curr_maze;
-    int is_running;
-    GameScreen current_screen;
+    MazeScreen **screens;
+    int totalScreens;
+    int currentScreen;
+    GameState currentState;
+    int currentVelocity;
+    bool isRunning;
+    bool showControls;
+    Button *mazeButtons;
+    Button searchButtons[5];
+    Button addVelButton;
+    Button rmVelButton;
+    Button actionButton;
 } Game;
 
+MazeScreen *CreateMazeScreen(Maze *m);
+void DeleteMazeScreen(MazeScreen *ms);
+void ChangeCurrentSearchType(Game *g, SearchType searchType);
 
-Maze *InitMaze(int, int, Position, Position, int **);
-Game *InitGame(Maze *[MAX_MAZES], int);
+Player *GetCurrentPlayer(const Game *g);
+SearchData *GetCurrentSearchData(const Game *g);
+SearchType CurrentSearchType(const Game *g);
+Maze *GetCurrentMaze(const Game *g);
 
-void RunGame(Game *);
-
-void FreeGame(Game *);
-
-#endif // GAME_H
+void InitGame(Game *g, const char *inputPath);
+void FreeGame(Game *g);
+void UpdateGame(Game *g);
+void DrawGame(Game *g);

@@ -1,12 +1,7 @@
-# directories
 .cache/
-.vscode/
 build/
+notes/
 
-# files
-.clangd
 .clang-format
 compile_commands.json
-
-# Persistent undo
-[._]*.un~
+tags
