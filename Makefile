@@ -44,13 +44,16 @@ GAME := $(BUILD_DIR)/$(GAME_NAME)$(EXE_EXT)
 ## TARGETS RECIPES
 all: $(GAME)
 
+# Create build directory
+$(BUILD_DIR):
+	@$(MKDIR) $(BUILD_DIR)
+
 # Link the object files to create the output executable
 $(GAME): $(OBJ_FILES)
 	$(CC) $^ -o $@ $(LDLIBS)
 
 # Compile source files into object files
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
-	@$(MKDIR) $(BUILD_DIR)
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(BUILD_DIR)
 	$(CC) $(CFLAGS) -MMD -MP -c $< -o $@
 
 # Include dependency files

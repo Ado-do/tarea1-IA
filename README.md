@@ -45,7 +45,6 @@ necesitas:
 - **gcc** via apt/dnf/pacman (Linux) o [msys2/mingw](https://www.msys2.org/) (Windows)
 - **git** via apt/dnf/pacman (Linux) o [git-scm.com](https://git-scm.com/downloads/win) (Windows)
 - **raylib** via apt/dnf/pacman (Linux) o [msys2/mingw](https://packages.msys2.org/packages/mingw-w64-ucrt-x86_64-raylib) (Windows)
-- **make** via apt/dnf/pacman (Linux) o [msys2/mingw](https://packages.msys2.org/packages/mingw-w64-ucrt-x86_64-make) (Windows)
 
 Por ejemplo, en distribuciones de Linux tipo Debian/Ubuntu puedes usar:
 
@@ -69,6 +68,8 @@ make run
 make
 ./build/JumpingMaze < input/test.txt
 ```
+
+Para windows puedes seguir los mismos pasos, pero usando `mingw32-make.exe` de MSYS2 en vez de `make`
 
 ## 4. Algoritmos de Búsqueda Implementados
 
