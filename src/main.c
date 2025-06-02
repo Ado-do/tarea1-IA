@@ -19,15 +19,10 @@ int main(int argc, char *argv[])
     Game game;
     InitGame(&game, GetInputPath(argc, argv));
 
-#ifdef DEBUG
-    SetTraceLogLevel(LOG_ALL);
-#else
-    SetTraceLogLevel(LOG_WARNING);
-#endif
-
     const int windowWidth = 1280;
     const int windowHeight = 720;
 
+    SetTraceLogLevel(LOG_WARNING);
     SetTargetFPS(60);
     InitWindow(windowWidth, windowHeight, GAME_NAME);
 

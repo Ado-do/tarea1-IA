@@ -1,74 +1,34 @@
-GAME_NAME := JumpingMaze
+CC = gcc
+CFLAGS = -Wall -Wextra -ggdb -std=c17
+LDLIBS = -lraylib
 
-# Detect OS and set appropriate variables
 ifeq ($(OS),Windows_NT)
-    # Windows settings
-    CC := gcc
-    EXE_EXT := .exe
-    RM := del /Q
-    MKDIR := mkdir
-    RMDIR := rmdir /S /Q
-    PKG_CONFIG := pkg-config
-    LDLIBS := $(shell $(PKG_CONFIG) --libs raylib) -lm -lpthread
-    RUN_CMD :=
+	LD_LIBS += -lopengl32 -lgdi32 -lwinmm
 else
-    # Linux settings
-    CC := gcc
-    EXE_EXT :=
-    RM := rm -f
-    MKDIR := mkdir -p
-    RMDIR := rm -rf
-    PKG_CONFIG := pkg-config
-    LDLIBS := $(shell $(PKG_CONFIG) --libs raylib) -lm -lpthread
-    RUN_CMD := ./
+	LDLIBS += -lm
 endif
 
-CFLAGS := -Wall -Wextra -std=c17
+SRC := $(wildcard src/*.c)
+OBJ := $(SRC:src/%.c=build/%.o)
 
-# Debug mode control (set DEBUG=1 to enable debug mode)
-ifeq ($(DEBUG),1)
-    CFLAGS += -ggdb -DDEBUG
-endif
+GAME := build/JumpingMaze
 
-# Directories
-SRC_DIR := src
-BUILD_DIR := build
 
-# Source and object files
-SRC_FILES := $(wildcard $(SRC_DIR)/*.c)
-OBJ_FILES := $(SRC_FILES:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
-DEP_FILES := $(OBJ_FILES:.o=.d)
-
-GAME := $(BUILD_DIR)/$(GAME_NAME)$(EXE_EXT)
-
-## TARGETS RECIPES
 all: $(GAME)
 
-# Create build directory
-$(BUILD_DIR):
-	@$(MKDIR) $(BUILD_DIR)
-
-# Link the object files to create the output executable
-$(GAME): $(OBJ_FILES)
+$(GAME): $(OBJ)
 	$(CC) $^ -o $@ $(LDLIBS)
 
-# Compile source files into object files
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(BUILD_DIR)
-	$(CC) $(CFLAGS) -MMD -MP -c $< -o $@
-
-# Include dependency files
--include $(DEP_FILES)
+build/%.o: src/%.c
+	@mkdir -p build/
+	$(CC) $(CFLAGS) -c $< -o $@
 
 # Clean target
 clean:
-ifeq ($(OS),Windows_NT)
-	@if exist $(BUILD_DIR) $(RMDIR) $(BUILD_DIR)
-else
-	@$(RMDIR) $(BUILD_DIR)
-endif
+	rm -rf build/
 
 # Run target
 run: $(GAME)
-	$(RUN_CMD)$< inputs/example.txt
+	./$< inputs/example.txt
 
 .PHONY: all clean run
