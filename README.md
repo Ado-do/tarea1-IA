@@ -6,7 +6,7 @@ Esta es la implementación del juego "JumpingMaze" para resolver el problema de
 "Laberinto Saltarín", utilizando diferentes algoritmos de búsqueda para
 resolver los diferentes laberintos.
 
-![](./doc/preview.gif)
+![Game preview](./doc/preview.gif)
 
 ### Alumno: Alonso Bustos E
 
@@ -25,8 +25,8 @@ El objetivo es encontrar una secuencia de movimientos que llegue desde la celda 
 
 ## 3. Estructura del Programa
 
-El programa está implementado en C utilizando la biblioteca Raylib para la
-interfaz gráfica. La estructura del código se organiza en los siguientes principales módulos:
+El programa está implementado en C utilizando la librería Raylib para la
+interfaz gráfica. La estructura del código se organiza en los siguientes principalmente en los siguientes archivos:
 
 | Archivo      | Descripción                                  |
 | ------------ | -------------------------------------------- |
@@ -39,18 +39,11 @@ interfaz gráfica. La estructura del código se organiza en los siguientes princ
 
 ### 3.3 Uso
 
-Puedes compilar en Linux, y quizás en Windows, usando `make`. Pero antes
-necesitas:
+Puedes compilar en Linux, y Windows, utilizando `make`. Pero antes
+necesitas obtener:
 
-- **gcc** via apt/dnf/pacman (Linux) o [msys2/mingw](https://www.msys2.org/) (Windows)
-- **git** via apt/dnf/pacman (Linux) o [git-scm.com](https://git-scm.com/downloads/win) (Windows)
-- **raylib** via apt/dnf/pacman (Linux) o [msys2/mingw](https://packages.msys2.org/packages/mingw-w64-ucrt-x86_64-raylib) (Windows)
-
-Por ejemplo, en distribuciones de Linux tipo Debian/Ubuntu puedes usar:
-
-```bash
-sudo apt install gcc make git libraylib5-dev
-```
+- **gcc, make y git** via package manager (Linux) o [msys2](https://www.msys2.org/) (Windows);
+- **raylib** via [guia oficial](https://github.com/raysan5/raylib/wiki/Working-on-GNU-Linux) (Linux) o [msys2](https://packages.msys2.org/packages/mingw-w64-ucrt-x86_64-raylib) (Windows)
 
 Luego, puedes seguir estos pasos desde la terminal:
 
@@ -64,12 +57,12 @@ cd tarea-IA
 # Compilas y ejecutas el programa
 make run
 
-# También puedes compilar y ejecutar por separado, dando la entrada
+# También puedes compilar y ejecutar por separado, dando el archivo de entrada como argumento
 make
-./build/JumpingMaze < input/test.txt
+./build/JumpingMaze input/test.txt
 ```
 
-Para windows puedes seguir los mismos pasos, pero usando `mingw32-make.exe` de MSYS2 en vez de `make`
+En Windows recomiendo utilizar la terminal de MSYS2 para seguir los pasos.
 
 ## 4. Algoritmos de Búsqueda Implementados
 
@@ -119,8 +112,8 @@ El juego implementa cuatro algoritmos de búsqueda (`search.c/h`), además de un
 El juego permite al usuario:
 
 - Mostrar/Esconder los recordatorios de los controles (tecla C);
-- Cambiar entre diferentes laberintos usando teclas numéricas (1 - ... - 9 - 0)
-- Seleccionar el algoritmo de búsqueda (teclas M: manual, D: DFS, B: BFS, U: UCS, A: A\*)
+- Cambiar entre diferentes laberintos usando teclas numéricas (teclas numéricas 1 - ... - 9 - 0)
+- Seleccionar el algoritmo de búsqueda (teclas M: Manual, D: DFS, B: BFS, U: UCS, A: A\*)
 - Controlar la velocidad de las búsquedas (teclas +/-)
 - Pausar/reanudar la búsqueda (tecla Space)
 - Reiniciar el laberinto actual (tecla R)
