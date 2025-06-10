@@ -173,8 +173,7 @@ static void DrawControls(Rectangle rec)
     Vector2 controlsPad = {10.0f, 28.0f};
     Color controlsColor = WHITE;
 
-    const char *text = "- Show/Hide controls: C key\n"
-                       "- Main action (solve, jump, next):\n  Space key\n"
+    const char *text = "- Main action (solve, jump, next):\n  Space key\n"
                        "- Reset Maze: R key\n"
                        "- Change between mazes:\n  Number keys (1 - ... - 9 - 0)\n"
                        "- Change between search types:\n  [B]FS  [D]FS [U]CS  [A]*  [M]ANUAL\n"
@@ -250,6 +249,8 @@ static void DrawMaze(Game *g, Rectangle rec)
     DrawVelocity(g, rec);
     if (g->showControls)
         DrawControls(rec);
+    else
+        DrawText("Show/Hide controls: C key\n", 10, rec.y + rec.height - 24, 20, WHITE);
 }
 
 static void DrawTopLine(Game *g, Rectangle rec)

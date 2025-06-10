@@ -49,7 +49,7 @@ Luego, puedes seguir estos pasos desde la terminal:
 
 ```bash
 # Clonas el repositorio
-git clone https://github.com/Ado-do/tarea1-IA
+git clone https://github.com/Ado-do/tarea1-ia.git
 
 # Te diriges al repositorio
 cd tarea-IA
